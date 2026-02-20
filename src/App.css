@@ -50,3 +50,13 @@ h1 {
   color: #f87171;
   font-size: 1rem;
 }
+
+.stats-link {
+  color: #475569;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.stats-link:hover {
+  color: #94a3b8;
+}

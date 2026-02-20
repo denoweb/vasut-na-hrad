@@ -1,0 +1,56 @@
+.stats-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.back-link {
+  color: #38bdf8;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.stats-total {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.stats-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 560px;
+  font-size: 0.95rem;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 0.6rem 1.2rem;
+  text-align: left;
+  border-bottom: 1px solid #334155;
+}
+
+.stats-table th {
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stats-table td {
+  color: #e2e8f0;
+}
+
+.stats-table tr:last-child td {
+  border-bottom: none;
+}
+
+.stats-table tr:hover td {
+  background: #1e293b;
+}
