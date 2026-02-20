@@ -17,8 +17,7 @@ function App() {
 
   return (
     <div className="page">
-      <h1>Vítejte</h1>
-      <div className="card">
+<div className="card">
         {error ? (
           <p className="error">{error}</p>
         ) : count === null ? (
