@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           </>
         )}
       </div>
+      <Link to="/stats" className="stats-link">Statistiky</Link>
     </div>
   );
 }

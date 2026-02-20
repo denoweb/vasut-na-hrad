@@ -16,10 +16,10 @@ export default async function handler(req, context) {
   const now = Date.now();
 
   // Load persisted data
-  let data = { count: 0, ips: {} };
+  let data = { count: 0, ips: {}, ipStats: {} };
   try {
     const stored = await store.get(STORE_KEY, { type: "json" });
-    if (stored) data = stored;
+    if (stored) data = { ipStats: {}, ...stored };
   } catch {
     // First run or unreadable — start fresh
   }
@@ -40,6 +40,7 @@ export default async function handler(req, context) {
   if (!skip && now - lastVisit >= ONE_MINUTE) {
     data.count++;
     data.ips[ip] = now;
+    data.ipStats[ip] = (data.ipStats[ip] ?? 0) + 1;
     await store.setJSON(STORE_KEY, data);
   }
 
