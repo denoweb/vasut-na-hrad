@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="page">
-      <h1>Vítejte na Vašutu na hradě</h1>
+      <h1>Vítejte</h1>
       <div className="card">
         {error ? (
           <p className="error">{error}</p>
