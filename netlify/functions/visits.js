@@ -31,9 +31,13 @@ export default async function handler(req, context) {
     }
   }
 
+  // Přeskočit počítání pokud má návštěvník cookie skip_count=1
+  const cookies = req.headers.get("cookie") || "";
+  const skip = cookies.split(";").some((c) => c.trim() === "skip_count=1");
+
   // Count this visit only if the IP hasn't visited in the last minute
   const lastVisit = data.ips[ip] ?? 0;
-  if (now - lastVisit >= ONE_MINUTE) {
+  if (!skip && now - lastVisit >= ONE_MINUTE) {
     data.count++;
     data.ips[ip] = now;
     await store.setJSON(STORE_KEY, data);
