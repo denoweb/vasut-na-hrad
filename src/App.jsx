@@ -6,6 +6,12 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Pokud je v URL ?skip=1, nastav cookie a přesměruj
+    if (new URLSearchParams(window.location.search).get("skip") === "1") {
+      document.cookie = "skip_count=1; max-age=31536000; path=/; SameSite=Strict";
+      window.history.replaceState({}, "", "/");
+    }
+
     fetch("/api/visits")
       .then((res) => {
         if (!res.ok) throw new Error();
