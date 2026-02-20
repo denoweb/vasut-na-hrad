@@ -32,7 +32,7 @@ function App() {
         ) : (
           <>
             <span className="count">{count.toLocaleString("cs-CZ")}</span>
-            <p className="label">celkových návštěv</p>
+            <p className="label">návštěv</p>
           </>
         )}
       </div>
