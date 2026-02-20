@@ -24,14 +24,14 @@ h1 {
   background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("/vasut.jpg") center/cover no-repeat;
   border: 1px solid #334155;
   border-radius: 1rem;
-  padding: 1.5rem 2rem 2rem 8rem;
+  padding: 1.5rem 0.75rem 0.75rem 8rem;
   min-width: 320px;
   min-height: 200px;
   text-align: right;
 }
 
 .count {
-  font-size: clamp(3rem, 10vw, 5rem);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   font-weight: 800;
   color: #4b5563;
   line-height: 1;
