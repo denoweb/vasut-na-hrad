@@ -40,7 +40,9 @@ export default async function handler(req, context) {
   if (!skip && now - lastVisit >= ONE_MINUTE) {
     data.count++;
     data.ips[ip] = now;
-    data.ipStats[ip] = (data.ipStats[ip] ?? 0) + 1;
+    const prev = data.ipStats[ip];
+    const prevCount = typeof prev === "object" ? prev.count : (prev ?? 0);
+    data.ipStats[ip] = { count: prevCount + 1, lastVisit: now };
     await store.setJSON(STORE_KEY, data);
   }
 
