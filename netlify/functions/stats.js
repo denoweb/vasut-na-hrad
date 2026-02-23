@@ -14,7 +14,11 @@ export default async function handler(req) {
   }
 
   const rows = Object.entries(data.ipStats)
-    .map(([ip, count]) => ({ ip, count }))
+    .map(([ip, val]) => {
+      const count = typeof val === "object" ? val.count : val;
+      const lastVisit = typeof val === "object" ? val.lastVisit : null;
+      return { ip, count, lastVisit };
+    })
     .sort((a, b) => b.count - a.count);
 
   return new Response(JSON.stringify({ total: data.count, rows }), {

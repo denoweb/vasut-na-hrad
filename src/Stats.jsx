@@ -39,6 +39,7 @@ function Stats() {
                   <th>#</th>
                   <th>IP adresa</th>
                   <th>Počet návštěv</th>
+                  <th>Poslední návštěva</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,6 +48,7 @@ function Stats() {
                     <td>{i + 1}</td>
                     <td>{row.ip}</td>
                     <td>{row.count}</td>
+                    <td>{row.lastVisit ? new Date(row.lastVisit).toLocaleString("cs-CZ") : "—"}</td>
                   </tr>
                 ))}
               </tbody>
