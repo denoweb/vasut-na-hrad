@@ -38,6 +38,7 @@ function App() {
             </>
           )}
         </div>
+        {/* kontaktní formulář — zatím skrytý
         <form
           className="contact-form"
           onSubmit={(e) => {
@@ -57,6 +58,7 @@ function App() {
             Odeslat
           </button>
         </form>
+        */}
       </div>
       <Link to="/stats" className="stats-link">Statistiky</Link>
     </div>
