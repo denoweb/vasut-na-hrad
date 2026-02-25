@@ -5,6 +5,7 @@ import "./App.css";
 function App() {
   const [count, setCount] = useState(null);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // Pokud je v URL ?skip=1, nastav cookie a přesměruj
@@ -24,17 +25,38 @@ function App() {
 
   return (
     <div className="page">
-<div className="card">
-        {error ? (
-          <p className="error">{error}</p>
-        ) : count === null ? (
-          <p className="loading">Načítám&hellip;</p>
-        ) : (
-          <>
-            <span className="count">{count.toLocaleString("cs-CZ")}</span>
-            <p className="label">návštěv</p>
-          </>
-        )}
+      <div className="main-col">
+        <div className="card">
+          {error ? (
+            <p className="error">{error}</p>
+          ) : count === null ? (
+            <p className="loading">Načítám&hellip;</p>
+          ) : (
+            <>
+              <span className="count">{count.toLocaleString("cs-CZ")}</span>
+              <p className="label">návštěv</p>
+            </>
+          )}
+        </div>
+        <form
+          className="contact-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const email = import.meta.env.VITE_CONTACT_EMAIL;
+            window.location.href = `mailto:${email}?subject=Zpráva z vasutnahrad.cz&body=${encodeURIComponent(message)}`;
+          }}
+        >
+          <textarea
+            className="contact-textarea"
+            placeholder="Napište zprávu…"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            rows={4}
+          />
+          <button type="submit" className="contact-btn" disabled={!message.trim()}>
+            Odeslat
+          </button>
+        </form>
       </div>
       <Link to="/stats" className="stats-link">Statistiky</Link>
     </div>
