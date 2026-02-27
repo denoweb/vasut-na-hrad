@@ -6,6 +6,7 @@ function App() {
   const [count, setCount] = useState(null);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
+  const [formStatus, setFormStatus] = useState(null); // null | "sending" | "success" | "error"
 
   useEffect(() => {
     // Pokud je v URL ?skip=1, nastav cookie a přesměruj
@@ -38,13 +39,31 @@ function App() {
             </>
           )}
         </div>
-        {/* kontaktní formulář — zatím skrytý
         <form
           className="contact-form"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            const email = import.meta.env.VITE_CONTACT_EMAIL;
-            window.location.href = `mailto:${email}?subject=Zpráva z vasutnahrad.cz&body=${encodeURIComponent(message)}`;
+            setFormStatus("sending");
+            try {
+              const res = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  access_key: "f236c74c-7c67-432d-8bd7-7eb3c2bb3e4f",
+                  subject: "Zpráva z vasutnahrad.cz",
+                  message,
+                }),
+              });
+              const data = await res.json();
+              if (data.success) {
+                setFormStatus("success");
+                setMessage("");
+              } else {
+                setFormStatus("error");
+              }
+            } catch {
+              setFormStatus("error");
+            }
           }}
         >
           <textarea
@@ -54,11 +73,12 @@ function App() {
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
           />
-          <button type="submit" className="contact-btn" disabled={!message.trim()}>
-            Odeslat
+          <button type="submit" className="contact-btn" disabled={!message.trim() || formStatus === "sending"}>
+            {formStatus === "sending" ? "Odesílám…" : "Odeslat"}
           </button>
+          {formStatus === "success" && <p className="form-success">Zpráva odeslána, díky!</p>}
+          {formStatus === "error" && <p className="form-error">Nepodařilo se odeslat zprávu.</p>}
         </form>
-        */}
       </div>
       <Link to="/stats" className="stats-link">Statistiky</Link>
     </div>
