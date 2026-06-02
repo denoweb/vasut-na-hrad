@@ -1,17 +1,15 @@
-import { put, list } from "@vercel/blob";
+import { get, put } from "@vercel/blob";
 
 const BLOB_KEY = "visits-data.json";
 const ONE_MINUTE = 60 * 1000;
 const CLEANUP_AFTER = 2 * ONE_MINUTE;
 
-// Načte aktuální data z Vercel Blob (nebo null, pokud ještě neexistují)
+// Načte aktuální data z (private) Vercel Blob, nebo null pokud ještě neexistují
 async function readData() {
   try {
-    const { blobs } = await list({ prefix: BLOB_KEY, limit: 1 });
-    if (blobs.length === 0) return null;
-    const res = await fetch(blobs[0].url, { cache: "no-store" });
-    if (!res.ok) return null;
-    return await res.json();
+    const result = await get(BLOB_KEY, { access: "private" });
+    if (!result || result.statusCode !== 200 || !result.stream) return null;
+    return await new Response(result.stream).json();
   } catch {
     return null;
   }
@@ -20,7 +18,7 @@ async function readData() {
 // Uloží data zpět do Vercel Blob pod stálým názvem (bez náhodného suffixu)
 async function writeData(data) {
   await put(BLOB_KEY, JSON.stringify(data), {
-    access: "public",
+    access: "private",
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
@@ -59,7 +57,12 @@ export default async function handler(req, res) {
     const prev = data.ipStats[ip];
     const prevCount = typeof prev === "object" ? prev.count : (prev ?? 0);
     data.ipStats[ip] = { count: prevCount + 1, lastVisit: now };
-    await writeData(data);
+    // Zápis obalíme — i kdyby selhal, vrátíme aktuální count místo pádu na 500
+    try {
+      await writeData(data);
+    } catch (err) {
+      console.error("Blob write failed:", err);
+    }
   }
 
   res.setHeader("Content-Type", "application/json");
