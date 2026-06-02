@@ -1,15 +1,13 @@
-import { list } from "@vercel/blob";
+import { get } from "@vercel/blob";
 
 const BLOB_KEY = "visits-data.json";
 
-// Načte aktuální data z Vercel Blob (nebo null, pokud ještě neexistují)
+// Načte aktuální data z (private) Vercel Blob, nebo null pokud ještě neexistují
 async function readData() {
   try {
-    const { blobs } = await list({ prefix: BLOB_KEY, limit: 1 });
-    if (blobs.length === 0) return null;
-    const res = await fetch(blobs[0].url, { cache: "no-store" });
-    if (!res.ok) return null;
-    return await res.json();
+    const result = await get(BLOB_KEY, { access: "private" });
+    if (!result || result.statusCode !== 200 || !result.stream) return null;
+    return await new Response(result.stream).json();
   } catch {
     return null;
   }
