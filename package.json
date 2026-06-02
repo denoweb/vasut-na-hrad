@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "vercel dev --listen 5177",
     "build": "vite build",
     "preview": "vite preview"
   },
