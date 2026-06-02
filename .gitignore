@@ -5,3 +5,5 @@ dist/
 .env.local
 .idea/
 .claude/
+.vercel
+.env*
