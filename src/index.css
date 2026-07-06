@@ -6,7 +6,9 @@
 
 body {
   font-family: system-ui, sans-serif;
-  background: #0f172a;
+  background-color: #1f1f1f;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
   color: #e2e8f0;
   min-height: 100vh;
 }

@@ -22,7 +22,7 @@ h1 {
   justify-content: flex-end;
   gap: 0.5rem;
   background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("/vasut.jpg") center/cover no-repeat;
-  border: 1px solid #334155;
+  border: 1px solid #a3a3a3;
   border-radius: 1rem;
   padding: 1.5rem 0.75rem 0.75rem 8rem;
   min-width: 320px;
@@ -78,7 +78,7 @@ h1 {
 
 .contact-textarea {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #334155;
+  border: 1px solid #a3a3a3;
   border-radius: 0.5rem;
   color: #f8fafc;
   font-size: 0.95rem;
@@ -88,7 +88,7 @@ h1 {
 }
 
 .contact-textarea::placeholder {
-  color: #64748b;
+  color: #a3a3a3;
 }
 
 .contact-textarea:focus {
